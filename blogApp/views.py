@@ -292,11 +292,3 @@ def categories(request):
     context['categories'] = categories
     return render(request, 'categories.html',context)
 
-class BlogSearchView (ListView):
-    model=Post
-    template_name='home.html'
-    context_object_name='posts'
-    
-    def get_queryset(self):
-        query=self.request.GET.get('q')
-        return Post.objects.filter(title__icontains=query)

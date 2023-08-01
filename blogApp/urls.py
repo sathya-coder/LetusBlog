@@ -27,5 +27,5 @@ urlpatterns = [
     path(r'view_post/<int:pk>',views.view_post,name='view-post'),
     path(r'<int:pk>',views.post_by_category,name='category-post'),
     path('categories',views.categories,name='category-page'),
-    path('search-blogs/', views.BlogSearchView.as_view(), name='search_blogs')
+
 ]
