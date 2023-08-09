@@ -57,11 +57,15 @@
                         </select>
                     </div>
                     <div class="form-group mb-3">
-                        <center><img src="{% if post.banner %}{{ post.banner.url }} {% else %}{{ MEDIA_URL }}/media/default/python-django.png{% endif %}" id="post-banner-mgt" alt="" class="img-fluid img-thumbnail bg-gradient bg-dark"></center>
+                        <center><img src="{% if post.banner %}{{ post.banner.url }} {% else %}{{ MEDIA_URL }}/media/default/blog.jpg{% endif %}" id="post-banner-mgt" alt="" class="img-fluid img-thumbnail bg-gradient bg-dark"></center>
                     </div>
                     <div class="form-group mb-3">
                         <label for="banner" class="control-label">Banner Image</label>
                         <input type="file" class="form-control rounded-0" name="banner" id="banner" accept="image/*" onchange="DisplayImage(this)">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tag" class="control-label">Tags</label>
+                        <input type="text" class="form-control rounded-0" id="tag" name="title" value="{{ post.tag}}" required>
                     </div>
                 </form>
             </div>

@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blogApp.apps.BlogappConfig',
     'django.contrib.humanize',
+    'rest_framework',
+    'taggit',
+    
 ]
 
 MIDDLEWARE = [

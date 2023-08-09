@@ -197,7 +197,7 @@ const isRTL = document.documentElement.dir === 'rtl';
 
 const defineJQueryPlugin = (name, plugin) => {
   onDOMContentLoaded(() => {
-    const $ = getjQuery();
+    // const $ = getjQuery();
     /* istanbul ignore if */
     if ($) {
       const JQUERY_NO_CONFLICT = $.fn[name];

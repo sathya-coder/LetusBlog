@@ -10,6 +10,18 @@ import json, datetime
 from django.contrib.auth.models import User
 from django.contrib import messages
 from blogApp.models import UserProfile,Category, Post
+from rest_framework.filters import SearchFilter, OrderingFilter
+from .serializers import TagSerializer
+from .models import Tag
+from .serializers import UserProfileSerializer
+from rest_framework import generics, status
+from rest_framework.response import Response
+
+from rest_framework import generics
+from .serializers import BlogSerializer
+from .models import Category
+from .serializers import PostSerializer
+
 
 from blogApp.forms import UserRegistration, UpdateProfile, UpdateProfileMeta, UpdateProfileAvatar, SaveCategory, SavePost, AddAvatar
 
@@ -213,7 +225,7 @@ def post_mgt(request):
 
 @login_required
 def manage_post(request,pk=None):
-    # post = post.objects.all()
+        #post = post.objects.all()
     if pk == None:
         post = {}
     elif pk > 0:
@@ -227,7 +239,7 @@ def manage_post(request,pk=None):
 
 @login_required
 def save_post(request):
-    resp = { 'status':'failed' , 'msg' : '' }
+    resp = { 'status':'failed' , 'msg' : '', 'errors':{} }
     if request.method == 'POST':
         post = None
         if not request.POST['id'] == '':
@@ -236,12 +248,12 @@ def save_post(request):
             form = SavePost(request.POST,request.FILES,instance = post)
         else:
             form = SavePost(request.POST,request.FILES)
-    if form.is_valid():
-        form.save()
-        resp['status'] = 'success'
-        messages.success(request, 'Post has been saved successfully')
-    else:
-        for field in form:
+        if form.is_valid():
+           form.save()
+           resp['status'] = 'success'
+           messages.success(request, 'Post has been saved successfully')
+        else:
+         for field in form:
             for error in field.errors:
                 resp['msg'] += str(error + '<br>')
         if not post == None:
@@ -292,3 +304,73 @@ def categories(request):
     context['categories'] = categories
     return render(request, 'categories.html',context)
 
+
+class BlogSearchView (ListView):
+     model=Post
+     template_name='home.html'
+     context_object_name='posts'
+    
+     def get_queryset(self):
+         query=self.request.GET.get('q')
+         return Post.objects.filter(title__icontains=query)
+ 
+ 
+#Category api   
+    # create a viewset
+class CategoryList(generics.ListAPIView):
+    # define queryset
+    queryset = Category.objects.all()
+    serializer_class = BlogSerializer
+    
+#Rest API for categories
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = BlogSerializer
+    lookup_field = 'pk'
+    
+class UpdateCategory(generics.UpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = BlogSerializer
+
+#Rest API for Posts
+class Postdetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    lookup_field = 'pk'
+    
+class Updatepost(generics.UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    
+# #Rest API for Userprofile
+# class Createuser(generics. CreateAPIView):
+#     queryset = UserProfile.objects.all()
+#     serializer_class = UserSerializer
+
+#Rest api for Search Filter
+class PostSearchAPIView(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title','blog_post']
+    
+#Taglist view api
+
+class TagListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+class TagDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    
+
+class UserProfileDetailAPIView(generics.RetrieveUpdateAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+class UserProfileListCreateAPIView(generics.ListCreateAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+   

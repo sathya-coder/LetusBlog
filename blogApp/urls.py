@@ -3,6 +3,15 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import RedirectView
+# basic URL Configurations
+from django.urls import include, path
+# import routers
+from rest_framework import routers
+
+from . import views
+
+
+
 
 urlpatterns = [
     path('redirect-admin', RedirectView.as_view(url="/admin"),name="redirect-admin"),
@@ -27,5 +36,17 @@ urlpatterns = [
     path(r'view_post/<int:pk>',views.view_post,name='view-post'),
     path(r'<int:pk>',views.post_by_category,name='category-post'),
     path('categories',views.categories,name='category-page'),
+    path('search-blogs/', views.BlogSearchView.as_view(), name='search_blogs'),
+    path('categorylist/<int:pk>/',views.CategoryList.as_view(),),
+    path('categorydetail/<int:pk>/', views.CategoryDetail.as_view()),
+    path('updatecategory/<int:pk>/',views.UpdateCategory.as_view()),
+    path('postdetail/<int:pk>/', views.Postdetail.as_view()),
+    path('updatepost/<int:pk>/', views.Updatepost.as_view()),
+    #path('createprofile/', views.Createuser.as_view()),
+    path('search/', views.PostSearchAPIView.as_view(), name='post-search'),
+    path('tags/', views.TagListCreateAPIView.as_view(), name='tag-list'),
+    path('tags/<int:pk>/', views.TagDetailAPIView.as_view(), name='tag-detail'),
+    path('profiles/<int:pk>/', views.UserProfileDetailAPIView.as_view(), name='user-profile-detail'),
+    path('profiles/', views.UserProfileListCreateAPIView.as_view(), name='user-profile-list'),
 
-]
+ ]
