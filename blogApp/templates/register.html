@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="dob" class="control-label">Birthdate</label>
-                                    <input type="date" class="form-control rounded-0" name="dob" id="dob" value="{{ reg_form.data.dob }}" required="required">
+                                    <input type="date" class="form-control rounded-0" name="dob" id="dob" value="{{ reg_form.data.dob }}"required="required" >
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="contact" class="control-label">Contact</label>
@@ -50,7 +50,7 @@
 
                                 <div class="form-group mb-3">
                                     <label for="avatar" class="control-label">User Avatar</label>
-                                    <input type="file" class="form-control rounded-0" name="avatar" id="avatar" accept="images/*" required="required">
+                                    <input type="file" class="form-control rounded-0" name="avatar" id="avatar" accept="images/*"required="required" >
                                 </div>
                                 {% for field in reg_form %} {% for error in field.errors %}
                                 <div class="alert alert-danger my-2">

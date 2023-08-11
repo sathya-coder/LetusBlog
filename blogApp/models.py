@@ -9,7 +9,7 @@ from django.utils import timezone
 from taggit.managers import TaggableManager
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     contact = models.CharField(max_length=250)
     dob = models.DateField(blank=True, null = True)
     address = models.TextField(blank=True, null = True)

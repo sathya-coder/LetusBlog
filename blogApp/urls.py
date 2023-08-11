@@ -12,7 +12,6 @@ from . import views
 
 
 
-
 urlpatterns = [
     path('redirect-admin', RedirectView.as_view(url="/admin"),name="redirect-admin"),
     path('', views.home, name="home-page"),
@@ -48,5 +47,6 @@ urlpatterns = [
     path('tags/<int:pk>/', views.TagDetailAPIView.as_view(), name='tag-detail'),
     path('profiles/<int:pk>/', views.UserProfileDetailAPIView.as_view(), name='user-profile-detail'),
     path('profiles/', views.UserProfileListCreateAPIView.as_view(), name='user-profile-list'),
+    # path('create-user-profile/', CreateUserProfileView.as_view(), name='create-user-profile'),
 
  ]

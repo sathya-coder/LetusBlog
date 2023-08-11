@@ -373,4 +373,3 @@ class UserProfileListCreateAPIView(generics.ListCreateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-   
